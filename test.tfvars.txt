@@ -1,0 +1,68 @@
+# ax_region = "europe-west1"
+
+# apigee_instances = {
+#   euw1-instance = {
+#     region       = "europe-west1"
+#     ip_range     = "10.0.0.0/22"
+#     environments = ["test1", "test2"]
+#   }
+# }
+
+# apigee_environments = {
+#   test1 = {
+#     display_name = "Test 1"
+#     description  = "Environment created by apigee/terraform-modules"
+#     node_config  = null
+#     iam          = null
+#     envgroups    = ["test"]
+#   }
+#   test2 = {
+#     display_name = "Test 2"
+#     description  = "Environment created by apigee/terraform-modules"
+#     node_config  = null
+#     iam          = null
+#     envgroups    = ["test"]
+#   }
+# }
+
+# apigee_envgroups = {
+#   test = {
+#     hostnames = ["test.api.example.com"]
+#   }
+# }
+
+# network = "apigee-network"
+
+psc_ingress_network = "psc-ingress"
+
+psc_ingress_subnets = [
+  {
+    name               = "apigee-psc-euw1"
+    ip_cidr_range      = "10.100.0.0/24"
+    region             = "europe-west1"
+    secondary_ip_range = null
+  }
+]
+
+peering_range = "10.0.0.0/22"
+support_range = "10.1.0.0/28"
+network       = "apigee-network"
+project_id    = "ava-test-394009"
+
+analytics_region = "europe-west1"
+runtime_region = "europe-west1"
+apigee_environments = ["eval1"]
+apigee_envgroups = {
+  eval = {
+    environments = ["eval1"]
+    hostnames    = ["34.96.91.173.nip.io"]
+  }
+}
+
+apigee_instances = {
+  euw1-instance = {
+    region       = "europe-west1"
+    ip_range     = "10.0.0.0/22"
+    environments = ["eval1"]
+  }
+}
