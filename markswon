@@ -1,3 +1,7 @@
-<div style="background: linear-gradient(to right, #00274D, #00A859, #4FC3F7, #1B5E20, #FF6F00); color:white; padding:20px; text-align:center; font-size:28px; font-weight:bold; border-radius:8px; box-shadow:0px 0px 15px rgba(0,0,0,0.5);">
-  Energy Dashboard
-</div>
+## Percentage Change Overview
+
+- **Energy Change (%)**
+  <span style="color:#FF5722; font-size:18px; font-weight:bold;">Percentage Change in Energy</span>
+
+- **Power Change (%)**
+  <span style="color:#2196F3; font-size:18px; font-weight:bold;">Percentage Change in Power</span>
