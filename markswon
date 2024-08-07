@@ -1,3 +1,82 @@
-## <div style="background: linear-gradient(to right, #4CAF50, #FFC107); color:white; padding:10px; border-radius:8px; text-align:center; font-size:24px; font-weight:bold;">
-Percentage Change Overview
-</div>
+view: solar_events {
+  sql_table_name: your_table_name_here ;;
+
+  dimension: event_id {
+    type: string
+    primary_key: true
+    sql: ${TABLE}.event_id ;;
+  }
+
+  dimension: site {
+    type: string
+    sql: ${TABLE}.site ;;
+  }
+
+  dimension: asset_id {
+    type: string
+    sql: ${TABLE}.asset_id ;;
+  }
+
+  dimension: time_on {
+    type: timestamp
+    sql: ${TABLE}.time_on ;;
+  }
+
+  dimension: time_off {
+    type: timestamp
+    sql: ${TABLE}.time_off ;;
+  }
+
+  dimension: penalizing_status {
+    type: string
+    sql: ${TABLE}.penalizing_status ;;
+  }
+
+  measure: total_downtime {
+    type: duration
+    sql_start: ${TABLE}.time_on
+    sql_end: ${TABLE}.time_off
+    convert_tz: no
+  }
+
+  measure: average_downtime_per_event {
+    type: average
+    sql: TIMESTAMPDIFF(SECOND, ${TABLE}.time_on, ${TABLE}.time_off) ;;
+    value_format_name: duration
+  }
+
+  measure: frequency_of_penalizing_events {
+    type: count
+    filters: [penalizing_status: "true"]
+  }
+
+  measure: estimated_energy_loss {
+    type: number
+    sql: (TIMESTAMPDIFF(SECOND, ${TABLE}.time_on, ${TABLE}.time_off) / 3600.0) * average_power_output ;; # Replace `average_power_output` with the actual average power output
+  }
+
+  measure: penalizing_events_by_site {
+    type: count
+    sql: ${TABLE}.event_id ;;
+    group_label: site
+  }
+
+  measure: penalizing_events_by_asset {
+    type: count
+    sql: ${TABLE}.event_id ;;
+    group_label: asset_id
+  }
+
+  measure: time_to_resolution {
+    type: average
+    sql: TIMESTAMPDIFF(SECOND, ${TABLE}.time_on, ${TABLE}.time_off) ;;
+    value_format_name: duration
+  }
+
+  measure: top_penalizing_issues {
+    type: count
+    sql: ${TABLE}.penalizing_status ;;
+    group_label: penalizing_status
+  }
+}
+
